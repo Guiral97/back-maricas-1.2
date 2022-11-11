@@ -1,10 +1,10 @@
 let router = require('express').Router();
-
 let user = require('./user');
+let city = require('./city');
 
 
-router.use('/api/user', user);
-
+router.use('/api/users', user);
+router.use('/api/cities', city);
 
 
 
