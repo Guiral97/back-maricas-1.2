@@ -52,7 +52,7 @@ const controller = {
             let city = await City.findOne({ _id: id }).populate({ path: 'userId', select: 'name photo -_id' });
             if (city) {
                 res.status(200).json({
-                    response: city.name,
+                    response: city,
                     success: true,
                     message: "City find successfully"
                 });
