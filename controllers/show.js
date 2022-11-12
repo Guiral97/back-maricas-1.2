@@ -3,6 +3,23 @@ const Show = require('../models/Show');
 
 const controller = {
 
+    create: async (req, res) => {
+        try {
+            let show = await Show.create(req.body);
+            res.status(201).json({
+                response: show._id,
+                success: true,
+                message: "Show created successfully",
+            });
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    },
+
+
     read: async (req, res) => {
 
         let query = {};
