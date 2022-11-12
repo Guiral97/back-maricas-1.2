@@ -55,5 +55,33 @@ const controller = {
             });
         }
     },
+
+    findOne: async (req, res) => {
+        let id = req.params.id;
+        try {
+            let hotel = await Hotel.findOne({ _id: id }).populate({
+                path: "userId",
+                select: ["name", "photo"],
+            });
+            if (hotel) {
+                res.status(200).json({
+                    response: hotel,
+                    success: true,
+                    message: "Hotel find successfully",
+                });
+            } else {
+                res.status(404).json({
+                    success: false,
+                    message: error.message,
+                });
+            }
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    },
 };
+
 module.exports = controller;
