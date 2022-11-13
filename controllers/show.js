@@ -50,6 +50,31 @@ const controller = {
             });
         }
     },
+
+    update: async (req, res) => {
+        let id = req.params.id;
+        try {
+            let show = await Show.findOneAndUpdate({ _id: id }, req.body, { new: true })
+
+            if (show) {
+                res.status(200).json({
+                    response: show.id,
+                    success: true,
+                    message: "Show update successfully",
+                });
+            } else {
+                res.status(404).json({
+                    success: false,
+                    message: error.message,
+                });
+            }
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    },
 }
 
 module.exports = controller;
