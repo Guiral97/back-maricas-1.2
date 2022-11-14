@@ -33,7 +33,7 @@ const controller = {
                 res.status(200).json({
                     success: true,
                     message: 'Itinerary find successfully',
-                    data: itineraries,
+                    response: itineraries,
                 })
             } else {
                 res.status(404).json({
