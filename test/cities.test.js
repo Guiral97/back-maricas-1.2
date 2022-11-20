@@ -3,7 +3,8 @@ const chai = require('chai');
 const assert = chai.assert;
 const request = require('supertest');
 
-describe('GET /api/cities', function () {
+
+describe('/api/cities', function () {
     it('should return an array of objects', function (done) {
         request(app)
             .get('/api/cities/')
@@ -18,4 +19,18 @@ describe('GET /api/cities', function () {
                 done();
             });
     });
+    it('should return an string', function (done) {
+        request(app)
+            .post('/api/cities')
+            .send({
+                name: 1,
+                })
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .expect(400)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done()
+            })
+    })
 })
