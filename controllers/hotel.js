@@ -1,11 +1,12 @@
 const Hotel = require("../models/Hotel");
+const { id } = require("../schemas/city");
 
 const controller = {
     create: async (req, res) => {
         try {
             let create_hotel = await Hotel.create(req.body);
             res.status(201).json({
-                id: create_hotel._id,
+                response: create_hotel,
                 success: true,
                 message: "Hotel was created successfully",
             });
