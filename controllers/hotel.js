@@ -1,5 +1,4 @@
 const Hotel = require("../models/Hotel");
-const { id } = require("../schemas/city");
 
 const controller = {
     create: async (req, res) => {
@@ -28,15 +27,16 @@ const controller = {
                 name: { $regex: req.query.name, $options: "i" },
             };
         }
-
         if (req.query.order) {
             order = {
                 capacity: req.query.order
             }
         }
-
+        if (req.query.userId) {
+            query = { userId: req.query.userId };
+        }
         try {
-            let hotels = await Hotel.find(query).sort(order)
+            let hotels = await Hotel.find(query).sort(order).populate({path:'userId', select:'role -_id'});
             if (hotels) {
                 res.status(200).json({
                     success: true,
