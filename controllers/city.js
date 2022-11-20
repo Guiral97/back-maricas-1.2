@@ -32,7 +32,7 @@ const controller = {
             };
         }
         try {
-            let all = await City.find(query);
+            let all = await City.find(query).populate({path:'userId', select:'role -_id'});
             res.status(200).json({
                 response: all,
                 success: true,
