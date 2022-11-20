@@ -19,15 +19,21 @@ describe('/api/cities', function () {
                 done();
             });
     });
-    it('should return an string', function (done) {
+    it('The user sent a string in the name field', function (done) {
         request(app)
             .post('/api/cities')
             .send({
-                name: 1,
-                })
+                name: "Las Vegas",
+                continent: "America",
+                photo: "https://imagizer.imageshack.com/v2/1007x671q90/923/kLT0DW.jpg",
+                population: 646790,
+                userId: "636d82c66a32c7c4c029d58b"
+            })
             .set('Accept', 'application/json')
             .set('Content-Type', 'application/json')
-            .expect(400)
+            .expect( res => {
+                assert.isString(res.body.response.name, 'Name is a string')              
+            })
             .end(function (err, res) {
                 if (err) return done(err);
                 done()
