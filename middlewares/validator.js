@@ -7,8 +7,8 @@ const validator = (schema) => {
                 message: data.error.details.map((err) => err.message),
             });
         }
+        next();
     }
-    next();
 }
 
 module.exports = validator;
