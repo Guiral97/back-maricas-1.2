@@ -15,18 +15,7 @@ describe("/api/hotels", function () {
                 done()
             })
     })
-    it('should return an string', function (done) {
-        const text = '121u248';
-        request(app)
-            .get('/api/hotels?name=' + text)
-            .expect(res => {
-                assert.isString(text, 'should be a string');
-            })
-            .end(function (err, res) {
-                if (err) return done(err);
-                done()
-            })
-    })
+    
     it('should return an 400', function (done) {
         request(app)
             .post('/api/hotels')
