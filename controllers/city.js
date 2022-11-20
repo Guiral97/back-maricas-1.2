@@ -22,6 +22,9 @@ const controller = {
         if (req.query.continent) {
             query = { continent: req.query.continent };
         }
+        if (req.query.userId) {
+            query = { userId: req.query.userId };
+        }
         if (req.query.name) {
             query = {
                 ...query,
