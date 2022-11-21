@@ -28,7 +28,7 @@ describe('/api/cities', function () {
                 "capacity": 100,
                 "cityId": "5f9f1b9b",
             })
-            .expect(400)
+            .expect(res => res.success === false)
             .end(function (err, res) {
                 if (err) return done(err);
                 done()
