@@ -19,6 +19,23 @@ describe('/api/cities', function () {
                 done();
             });
     });
+
+    it('should return an 400', function (done) {
+        request(app)
+            .post('/api/cities')
+            .send({
+                "name": "Nuevo Ciudad",
+                "capacity": 100,
+                "cityId": "5f9f1b9b",
+            })
+            .expect(400)
+            .end(function (err, res) {
+                if (err) return done(err);
+                done()
+            })
+    })
+    
+
     it('The user sent a string in the name field', function (done) {
         request(app)
             .post('/api/cities')
