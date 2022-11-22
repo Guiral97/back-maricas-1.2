@@ -34,11 +34,18 @@ const controller = {
         }
         try {
             let all = await City.find(query).populate({path:'userId', select:'role -_id'});
+            if(all.length > 0){
             res.status(200).json({
                 response: all,
                 success: true,
                 message: "City find successfully",
-            });
+            })}else{
+                res.status(404).json({
+                    success: false,
+                    message: "City not found",
+                    response: []
+                })
+            }
         } catch (error) {
             res.status(400).json({
                 success: false,
