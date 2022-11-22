@@ -38,7 +38,7 @@ const controller = {
         }
         try {
             let hotels = await Hotel.find(query).sort(order).populate({path:'userId', select:'role -_id'});
-            if (hotels) {
+            if (hotels.length > 0) {
                 res.status(200).json({
                     success: true,
                     message: "Hotel find successfully",
@@ -47,13 +47,14 @@ const controller = {
             } else {
                 res.status(404).json({
                     success: false,
-                    message: error.message,
+                    message: "Hotel not found",
+                    response: [],
                 });
             }
         } catch (error) {
             res.status(400).json({
                 success: false,
-                message: error.message,
+                message: error.message,               
             });
         }
     },
