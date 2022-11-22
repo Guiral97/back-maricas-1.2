@@ -18,10 +18,8 @@ const schema = joi.object({
                 'string.uri': 'Photo must be a valid URL',
                 'any.required': 'Photo is required',
                 }),
-        population: joi.number().required().min(25000).max(15000000).messages({
+        population: joi.number().required().messages({
                 'number.empty': 'Population is required',
-                'number.min': 'Population must be at least 25000',
-                'number.max': 'Population must be at most 15000000',
                 'any.required': 'Population is required',
                 }),
         userId: joi.any().messages({

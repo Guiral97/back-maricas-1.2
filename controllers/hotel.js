@@ -5,9 +5,10 @@ const controller = {
         try {
             let create_hotel = await Hotel.create(req.body);
             res.status(201).json({
-                response: create_hotel,
+                id: create_hotel._id,
                 success: true,
-                message: "Hotel was created successfully",
+                message: "Hotel was created successfully",               
+                response: create_hotel, 
             });
         } catch (error) {
             res.status(400).json({
