@@ -93,7 +93,7 @@ const controller = {
             
             if (hotel) {
                 res.status(200).json({
-                    response: hotel.name,
+                    response: hotel,
                     success: true,
                     message: "Hotel update successfully",
                 });

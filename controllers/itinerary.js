@@ -60,7 +60,7 @@ const controller = {
             
             if (itinerary) {
                 res.status(200).json({
-                    response: itinerary.id,
+                    response: itinerary,
                     success: true,
                     message: "Itinerary update successfully",
                 });
