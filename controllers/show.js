@@ -63,7 +63,7 @@ const controller = {
 
             if (show) {
                 res.status(200).json({
-                    response: show.id,
+                    response: show,
                     success: true,
                     message: "Show update successfully",
                 });
