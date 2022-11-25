@@ -7,4 +7,4 @@ function accountHasBeenVerified(req, res, next) {
     verifyResponse(req,res)
 }
 
-module.exports = { accountHasBeenVerified }
+module.exports = accountHasBeenVerified
