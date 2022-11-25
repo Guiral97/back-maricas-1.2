@@ -3,11 +3,12 @@ const Hotel = require("../models/Hotel");
 const controller = {
     create: async (req, res) => {
         try {
-            let new_hotel = await Hotel.create(req.body);
+            let create_hotel = await Hotel.create(req.body);
             res.status(201).json({
-                id: new_hotel._id,
+                id: create_hotel._id,
                 success: true,
-                message: "Hotel created successfully",
+                message: "Hotel was created successfully",               
+                response: create_hotel, 
             });
         } catch (error) {
             res.status(400).json({
@@ -27,16 +28,17 @@ const controller = {
                 name: { $regex: req.query.name, $options: "i" },
             };
         }
-
         if (req.query.order) {
             order = {
                 capacity: req.query.order
             }
         }
-
+        if (req.query.userId) {
+            query = { userId: req.query.userId };
+        }
         try {
-            let hotels = await Hotel.find(query).sort(order)
-            if (hotels) {
+            let hotels = await Hotel.find(query).sort(order).populate({path:'userId', select:'role -_id'});
+            if (hotels.length > 0) {
                 res.status(200).json({
                     success: true,
                     message: "Hotel find successfully",
@@ -45,13 +47,14 @@ const controller = {
             } else {
                 res.status(404).json({
                     success: false,
-                    message: error.message,
+                    message: "Hotel not found",
+                    response: [],
                 });
             }
         } catch (error) {
             res.status(400).json({
                 success: false,
-                message: error.message,
+                message: error.message,               
             });
         }
     },
@@ -70,13 +73,13 @@ const controller = {
                     message: "Hotel find successfully",
                 });
             } else {
-                res.status(404).json({
+                res.status(400).json({
                     success: false,
                     message: error.message,
                 });
             }
         } catch (error) {
-            res.status(400).json({
+            res.status(404).json({
                 success: false,
                 message: error.message,
             });
@@ -90,7 +93,7 @@ const controller = {
             
             if (hotel) {
                 res.status(200).json({
-                    response: hotel.name,
+                    response: hotel,
                     success: true,
                     message: "Hotel update successfully",
                 });

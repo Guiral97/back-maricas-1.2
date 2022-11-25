@@ -6,6 +6,7 @@ const controller = {
             let new_city = await City.create(req.body);
             res.status(201).json({
                 id: new_city._id,
+                response: new_city,
                 success: true,
                 message: "City created successfully",
             });
@@ -22,6 +23,9 @@ const controller = {
         if (req.query.continent) {
             query = { continent: req.query.continent };
         }
+        if (req.query.userId) {
+            query = { userId: req.query.userId };
+        }
         if (req.query.name) {
             query = {
                 ...query,
@@ -29,12 +33,19 @@ const controller = {
             };
         }
         try {
-            let all = await City.find(query);
+            let all = await City.find(query).populate({path:'userId', select:'role -_id'});
+            if(all.length > 0){
             res.status(200).json({
                 response: all,
                 success: true,
                 message: "City find successfully",
-            });
+            })}else{
+                res.status(404).json({
+                    success: false,
+                    message: "City not found",
+                    response: []
+                })
+            }
         } catch (error) {
             res.status(400).json({
                 success: false,
