@@ -9,7 +9,7 @@ const controller = {
 
     create: async (req, res, next) => {
         let { name, lastName, photo, age, email, password } = req.body
-        let role = 'admin'
+        let role = 'user'
         let verified = false
         let logged = false
         let code = crypto.randomBytes(10).toString('hex')
@@ -53,6 +53,7 @@ const controller = {
                     
                 user = {
                     name: user.name,
+                    role: user.role,
                     email: user.email,
                     photo: user.photo
                 }
