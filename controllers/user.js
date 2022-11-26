@@ -23,6 +23,55 @@ const controller = {
         }
     },
 
+    findOne: async (req, res) => {
+        let id = req.params.id;
+        try {
+            let user = await User.findOne({ _id: id })
+            if (user) {
+                res.status(200).json({
+                    response: user,
+                    success: true,
+                    message: "User find successfully",
+                });
+            } else {
+                res.status(400).json({
+                    success: false,
+                    message: error.message,
+                });
+            }
+        } catch (error) {
+            res.status(404).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    },
+
+    update: async (req, res) => {
+        let id = req.params.id;
+        try {
+            let user = await User.findOneAndUpdate({_id: id}, req.body, {new: true})
+            
+            if (user) {
+                res.status(200).json({
+                    response: user,
+                    success: true,
+                    message: "User update successfully",
+                });
+            } else {
+                res.status(404).json({
+                    success: false,
+                    message: error.message,
+                });
+            }
+        } catch (error) {
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    },
+
     check: async (req, res, next) => {
         let { code } = req.params
 
@@ -41,7 +90,7 @@ const controller = {
     login: async (req, res, next) => {
         let { password } = req.body
         let { user } = req
-        try {      
+        try {
             const checkPassword = bcryptjs.compareSync(password, user.password)
             if (checkPassword) {
                 const userDb = await User.findOneAndUpdate({ email: user.email }, { logged: true }, { new: true })
@@ -50,7 +99,7 @@ const controller = {
                     process.env.KEY_JWT,
                     { expiresIn: 60 * 60 * 24 }
                 )
-                    
+
                 user = {
                     name: user.name,
                     role: user.role,
@@ -82,15 +131,15 @@ const controller = {
         }
     },
     logout: async (req, res, next) => {
-        const { email } = req.user 
+        const { email } = req.user
         try {
             await User.findOneAndUpdate(
-                { email }, 
-                { logged: false }, 
-                { new: true } 
+                { email },
+                { logged: false },
+                { new: true }
 
             )
-            return userSignedOutResponse(req,res) 
+            return userSignedOutResponse(req, res)
         } catch (error) {
             next(error)
         }

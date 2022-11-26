@@ -1,5 +1,5 @@
 let router = require('express').Router();
-let { create, check, login, loginWithToken, logout } = require('../controllers/user');
+let { create, check, login, loginWithToken, logout, findOne, update } = require('../controllers/user');
 const validator = require('../middlewares/validator');
 const schema = require('../schemas/user');
 const schemaLogin = require('../schemas/userLogin');
@@ -15,5 +15,7 @@ router.post('/sign-in', validator(schemaLogin), accountExistsSignIn, accountHasB
 router.get('/verify/:code', check);
 router.post('/token', passport.authenticate('jwt', { session: false }), mustSignIn, loginWithToken)
 router.put('/sign-out', passport.authenticate('jwt', { session: false }), logout)
+router.get('/me/:id', findOne)
+router.patch('/me/:id', update)
 
 module.exports = router;
