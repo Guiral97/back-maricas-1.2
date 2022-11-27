@@ -16,6 +16,7 @@ passport.use(
                 let user = await User.findOne({ _id :jwt_payload.id }) 
                 if (user) {
                     user = { 
+                        id: user._id,
                         name: user.name,
                         email: user.email,
                         role: user.role,

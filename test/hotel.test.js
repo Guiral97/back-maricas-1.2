@@ -2,7 +2,7 @@ const app = require('../app');
 const chai = require('chai');
 const assert = chai.assert;
 const request = require('supertest');
-const { message } = require('../schemas/city');
+
 
 
 describe("/api/hotels", function () {

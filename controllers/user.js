@@ -121,7 +121,6 @@ const controller = {
     },
     loginWithToken: async (req, res, next) => {
         let { user } = req
-
         try {
             return res.json({
                 response: { user },
