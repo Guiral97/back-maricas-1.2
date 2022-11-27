@@ -14,8 +14,9 @@ router.post('/sign-up', validator(schema), accountExistsSignUp, create);
 router.post('/sign-in', validator(schemaLogin), accountExistsSignIn, accountHasBeenVerified, login)
 router.get('/verify/:code', check);
 router.post('/token', passport.authenticate('jwt', { session: false }), mustSignIn, loginWithToken)
-router.put('/sign-out', passport.authenticate('jwt', { session: false }), logout)
+router.post('/sign-out', passport.authenticate('jwt', { session: false }), logout)
 router.get('/me/:id', findOne)
 router.patch('/me/:id', update)
 
 module.exports = router;
+            

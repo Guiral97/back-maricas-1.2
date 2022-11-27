@@ -104,7 +104,9 @@ const controller = {
                     name: user.name,
                     role: user.role,
                     email: user.email,
-                    photo: user.photo
+                    photo: user.photo,
+                    age: user.age,
+                    id: user.id
                 }
                 return res.status(200).json({
                     response: { user, token },
@@ -133,12 +135,7 @@ const controller = {
     logout: async (req, res, next) => {
         const { email } = req.user
         try {
-            await User.findOneAndUpdate(
-                { email },
-                { logged: false },
-                { new: true }
-
-            )
+            await User.findOneAndUpdate({ email },{ logged: false },{ new: true })
             return userSignedOutResponse(req, res)
         } catch (error) {
             next(error)
