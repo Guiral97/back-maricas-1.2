@@ -1,5 +1,5 @@
 let router = require('express').Router();
-let {create, read, update, destroy  } = require('../controllers/itinerary');
+let { create, read, update, destroy } = require('../controllers/itinerary');
 const verifyUser = require('../middlewares/verifyUser');
 const validator = require('../middlewares/validator');
 const schema = require('../schemas/tinerary');
