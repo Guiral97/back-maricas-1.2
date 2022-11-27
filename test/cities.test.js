@@ -56,4 +56,13 @@ describe('/api/cities', function () {
                 done()
             })
     })
+    it('the city has been successfully removed', function (done) {
+        request(app)
+            .delete('/api/cities/636d90bed8cb38986aa0e48d')
+            .expect(200 )
+            .end(function (err, res) {
+                if (err) return done(err);
+                done()
+            })
+    })
 })
