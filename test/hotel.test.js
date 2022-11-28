@@ -2,7 +2,7 @@ const app = require('../app');
 const chai = require('chai');
 const assert = chai.assert;
 const request = require('supertest');
-const { message } = require('../schemas/city');
+
 
 
 describe("/api/hotels", function () {
@@ -59,5 +59,15 @@ describe("/api/hotels", function () {
                 if (err) return done(err);
                 done()
             })
+    });
+    it('the hotel has been successfully removed', function (done) {
+        request(app)
+            .delete('/api/hotels/6384a0a08b96d0f51e651ef8')
+            .expect(200 )
+            .end(function (err, res) {
+                if (err) return done(err);
+                done()
+            })
     })
+
 })
