@@ -97,7 +97,7 @@ const controller = {
                 const token = jwt.sign(
                     { id: userDb.id, name: userDb.name, photo: userDb.photo, logged: userDb.logged },
                     process.env.KEY_JWT,
-                    { expiresIn: 60 * 60 * 24 }
+                    { expiresIn: 60 * 60 * 24  }
                 )
 
                 user = {
