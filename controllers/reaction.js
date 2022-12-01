@@ -26,23 +26,40 @@ const controller = {
             query = { userId: req.query.userId };
         }
         try {
-            let reactions = await Reaction.find(query).populate({ path: 'userId', select: 'name lastName photo' })
-            if (reactions.length > 0) {
-                let lengthOfReactions = {}
-                reactions.forEach(reaction => lengthOfReactions[reaction.name] = reaction.userId.length)
-                res.status(200).json({
-                    lengthOfReactions,
-                    id: req.query.itineraryId,
-                    data: reactions,
-                    success: true,
-                    message: `All reactions of the itineraryId ${req.query.itineraryId}`,
-                })
+            if (req.query.itineraryId) {
+                let reactions = await Reaction.find(query).populate({ path: 'userId', select: 'name lastName photo' })
+                if (reactions.length > 0) {
+                    let lengthOfReactions = {}
+                    reactions.forEach(reaction => lengthOfReactions[reaction.name] = reaction.userId.length)
+                    res.status(200).json({
+                        lengthOfReactions,
+                        id: req.query.itineraryId,
+                        data: reactions,
+                        success: true,
+                        message: `All reactions of the itineraryId ${req.query.itineraryId}`,
+                    })
+                } else {
+                    res.status(404).json({
+                        success: false,
+                        message: 'No reactions found',
+                        data: [],
+                    });
+                }
             } else {
-                res.status(404).json({
-                    success: false,
-                    message: 'No reactions found',
-                    data: [],
-                });
+                let reactions = await Reaction.find(query).populate({ path: 'itineraryId', select: 'name photo' })
+                if (reactions.length > 0) {
+                    res.status(200).json({
+                        data: reactions,
+                        success: true,
+                        message: `All reactions of the userId`,
+                    })
+                } else {
+                    res.status(404).json({
+                        success: false,
+                        message: 'No reactions found',
+                        data: [],
+                    });
+                }
             }
         } catch (error) {
             res.status(400).json({
@@ -55,7 +72,7 @@ const controller = {
     updateReaction: async (req, res) => {
         let query = {};
         let Id = req.user.id
-        
+
         if (req.query.itineraryId) {
             query = {
                 itineraryId: req.query.itineraryId
@@ -98,6 +115,23 @@ const controller = {
         }
     },
 
+    destroy: async (req, res) => {
+        let { id } = req.params
+
+        try {
+            let response = await Reaction.findOneAndUpdate({ _id: id }, { $pull: { userId: req.user.id } }, { new: true })
+            res.status(200).json({
+                response,
+                message: `reaction deleted`,
+                success: true,
+            })
+        } catch (error) {
+            res.status(400).json({
+                message: error.message,
+                success: false
+            })
+        }
+    },
 }
 
 module.exports = controller;    
