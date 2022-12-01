@@ -1,10 +1,8 @@
 const joi = require("joi");
 
 const schema = joi.object({
-    itineraryId: joi.string().required().messages({
-        "string.empty": "The field 'itineraryId' is required, please enter it",
-        "any.required": "The field 'itineraryId' is required, please enter it",
-    }),
+    itineraryId: joi.string(),
+    showId: joi.string(),
     name: joi.string().required().messages({
         "string.empty": "Name is required",
         "any.required": "Name is required",
