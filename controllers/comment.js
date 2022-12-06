@@ -5,14 +5,14 @@ const controller = {
 
     create: async (req, res) => {
         let id = req.body.userId;
-        let { showId, comment, userId, date } = req.body;
+        let { showId, itineraryId, comment, userId, date } = req.body;
 
         try {
             let user = await User.findOne({ _id: id });
             userId = user._id;
 
             let comments = await (
-                await Comment.create({ showId, comment, userId, date })
+                await Comment.create({ showId, itineraryId, comment, userId, date })
             ).populate("userId", {
                 photo: 1,
                 name: 1,
@@ -34,16 +34,26 @@ const controller = {
         let comments;
 
         let query = {};
+
         if (req.query.showId) {
             query = { showId: req.query.showId };
         }
+        if (req.query.itineraryId) {
+            query = { itineraryId: req.query.itineraryId };
+        }
+
+        if (req.query.order) {
+            order = {
+                date: req.query.order,
+            };
+        }
 
         try {
-            comments = await Comment.find(query).sort({ date: "desc" }).populate("userId", {
+            comments = await Comment.find(query).sort({ date: "asc" }).populate("userId", {
                 photo: 1,
                 name: 1,
                 logged: 1,
-            });;
+            });
             res.json({ success: true, response: comments });
         } catch (error) {
             console.log(error);
