@@ -77,6 +77,7 @@ const controller = {
                 name: req.query.name
             };
         try {
+            // console.log(query)
             let reaction = await Reaction.findOne(query)
             if (reaction) {
                 if (reaction.userId.includes(Id)) {
