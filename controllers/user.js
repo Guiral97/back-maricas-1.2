@@ -78,7 +78,7 @@ const controller = {
         try {
             let user = await User.findOneAndUpdate({ code: code }, { verified: true }, { new: true })
             if (user) {
-                return res.redirect('https://i.kym-cdn.com/photos/images/newsfeed/001/901/343/d49.jpg')
+                return res.redirect('http:localhost:3000/')
             } else {
                 return userNotFoundResponse(req, res)
             }
